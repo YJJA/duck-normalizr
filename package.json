@@ -5,6 +5,11 @@
   "scripts": {
     "build": "tsc"
   },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://github.com/YJJA/duck-normalizr",
+  "repository": "https://github.com/YJJA/duck-normalizr.git",
   "devDependencies": {
     "@types/superagent": "^3.8.6",
     "jest": "24.0.0",
