@@ -14,7 +14,7 @@ export interface IRootState {
     [entityName: string]: IStateItem;
 }
 export interface IStateAction extends AnyAction {
-    changes?: IRootState;
+    entities?: IRootState;
 }
 export interface IEntityState<D = any> {
     status: string;

@@ -5,6 +5,7 @@ import {
   normalizeEntity,
   normalizeError,
   denormalizeEntity,
+  denormalizeData,
 } from "./normalizr-helpers";
 import { IRootState, IEntityState } from "./types";
 
@@ -32,7 +33,7 @@ interface RequestInitial extends IRequestOption {
   schema?: Schema;
   globalError?: boolean;
   payload?: object;
-  data?: (res: any) => object;
+  data?: (res: any, data: any) => object;
 }
 
 interface IThunkAction extends AnyAction {
@@ -68,7 +69,11 @@ export const createThunkMiddleware: (
     next(normalizeStatus(stateKey, loadingStatus));
     return handle({ url, method, body, query })
       .then((res: any) => {
-        const result = data && data(res);
+        let result = undefined;
+        if (data) {
+          const state = denormalizeData(stateKey, schema || null, store.getState());
+          result = data(res, state);
+        }
         next(normalizeEntity(stateKey, schema || null, result, loadedStatus));
         return res;
       })
