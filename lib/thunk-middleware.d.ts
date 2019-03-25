@@ -23,7 +23,7 @@ interface RequestInitial extends IRequestOption {
     schema?: Schema;
     globalError?: boolean;
     payload?: object;
-    data?: (res: any) => object;
+    data?: (res: any, state: any) => object;
 }
 interface IThunkAction extends AnyAction {
     payload?: RequestInitial;
