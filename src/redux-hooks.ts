@@ -93,7 +93,7 @@ export interface IUseThunk {
 export const useThunk: IUseThunk = (thunkAction: any, ...args: any[]) => {
   const dispatch = useDispatch();
   const callback = useCallback(
-    (...props) => {
+    (...props: any[]) => {
       return dispatch(thunkAction(...args, ...props));
     },
     [...args]
