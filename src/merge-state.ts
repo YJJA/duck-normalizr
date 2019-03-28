@@ -1,4 +1,4 @@
-import { IRootState, IStateItem, IStateItemProps, IStateItemData } from "./types";
+import {IRootState, IStateItem, IStateItemProps, IStateItemData} from "./types";
 
 /**
  * 合并对象数据
@@ -10,7 +10,7 @@ const mergeStateObject = <T extends IStateItemProps<any>>(changes?: T, state?: T
     return changes || state;
   }
 
-  return { ...state, ...changes };
+  return {...state, ...changes};
 };
 
 /**
@@ -34,12 +34,12 @@ const mergeStateData = <T extends IStateItemProps<any>>(changes?: T, state?: T) 
       } else if (changeItem === null) {
         result[key] = changeItem;
       } else {
-        result[key] = { ...changes[key], ...state[key] };
+        result[key] = {...stateItem, ...changeItem};
       }
 
       return result;
     },
-    { ...state }
+    {...state}
   );
 };
 
@@ -65,6 +65,6 @@ export const mergeState = (state: IRootState, changes?: IRootState): IRootState 
       result[key] = mergeStateItem(changes[key], state[key]);
       return result;
     },
-    { ...state }
+    {...state}
   );
 };

@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import { useDispatch, useMappedState } from "redux-react-hook";
-import { AnyAction } from "redux";
-import { IRootState } from "./types";
+import {useCallback} from "react";
+import {useDispatch, useMappedState} from "redux-react-hook";
+import {AnyAction} from "redux";
+import {IRootState} from "./types";
 
 // useSelecter
 

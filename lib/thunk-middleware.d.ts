@@ -15,15 +15,15 @@ export interface IRequestOption {
     url: string;
     body?: object;
     query?: object | string;
+    data?: (res: any, state: any) => object;
 }
-interface RequestInitial extends IRequestOption {
+interface RequestInitial extends Partial<IRequestOption> {
     stateKey: string;
     loadingStatus?: string;
     loadedStatus?: string;
     schema?: Schema;
     globalError?: boolean;
     payload?: object;
-    data?: (res: any, state: any) => object;
 }
 interface IThunkAction extends AnyAction {
     payload?: RequestInitial;

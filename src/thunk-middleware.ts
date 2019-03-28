@@ -1,5 +1,5 @@
-import { Schema } from "normalizr";
-import { Middleware, AnyAction, Dispatch } from "redux";
+import {Schema} from "normalizr";
+import {Middleware, AnyAction, Dispatch} from "redux";
 import {
   normalizeStatus,
   normalizeEntity,
@@ -7,7 +7,7 @@ import {
   denormalizeEntity,
   denormalizeData,
 } from "./normalizr-helpers";
-import { IRootState, IEntityState } from "./types";
+import {IRootState, IEntityState} from "./types";
 
 export enum MethodType {
   GET = "GET",
@@ -24,16 +24,16 @@ export interface IRequestOption {
   url: string;
   body?: object;
   query?: object | string;
+  data?: (res: any, state: any) => object;
 }
 
-interface RequestInitial extends IRequestOption {
+interface RequestInitial extends Partial<IRequestOption> {
   stateKey: string;
   loadingStatus?: string;
   loadedStatus?: string;
   schema?: Schema;
   globalError?: boolean;
   payload?: object;
-  data?: (res: any, state: any) => object;
 }
 
 interface IThunkAction extends AnyAction {
@@ -53,7 +53,7 @@ export const createThunkMiddleware: (
 
   const {
     url,
-    method,
+    method = MethodType.GET,
     stateKey,
     body,
     query,
@@ -67,7 +67,7 @@ export const createThunkMiddleware: (
 
   if (url) {
     next(normalizeStatus(stateKey, loadingStatus));
-    return handle({ url, method, body, query })
+    return handle({url, method, body, query})
       .then((res: any) => {
         let result = undefined;
         if (data) {
@@ -106,7 +106,7 @@ interface ICreateThunk {
 export const createThunk: ICreateThunk = (fn: any) => {
   return (...args: any[]) => {
     const payload = fn(...args);
-    return { type: ThunkActionType, payload };
+    return {type: ThunkActionType, payload};
   };
 };
 
@@ -141,7 +141,7 @@ interface ICreateSelecter {
 
 export const createSelecter: ICreateSelecter = (fn: any) => {
   return (state: IRootState, ...args: any) => {
-    const { stateKey, schema, default: defaultValue } = fn(...args);
+    const {stateKey, schema, default: defaultValue} = fn(...args);
     return denormalizeEntity(stateKey, schema || null, state, defaultValue);
   };
 };
